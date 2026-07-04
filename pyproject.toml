@@ -9,7 +9,7 @@ description = "Terminal utility for log analysis, error detection, and reporting
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.12"
-authors = [{ name = "erafox" }]
+authors = [{ name = "jesuspeterson342-dot" }]
 keywords = ["logs", "devops", "cli", "analysis", "nginx", "docker", "linux"]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -44,7 +44,7 @@ dev = [
 logdoctor = "logdoctor.cli:app"
 
 [project.urls]
-Repository = "https://github.com/erafox/logdoctor"
+Repository = "https://github.com/jesuspeterson342-dot/logdoctor"
 
 [tool.hatch.build.targets.wheel]
 packages = ["logdoctor"]
