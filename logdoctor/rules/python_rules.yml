@@ -1,0 +1,54 @@
+# Python-specific rules
+- id: python-traceback
+  name: Python traceback
+  pattern: "Traceback \\(most recent call last\\):"
+  severity: high
+  category: application
+  log_types: ["python_traceback", "generic"]
+  description: "Обнаружен необработанный исключительный случай в Python"
+  recommendation: "Изучи стек вызовов, добавь обработку исключений или исправь причину"
+
+- id: python-import-error
+  name: ImportError
+  pattern: "(?i)ImportError|ModuleNotFoundError"
+  severity: medium
+  category: application
+  log_types: ["python_traceback", "generic"]
+  description: "Python не может найти или импортировать модуль"
+  recommendation: "Установи модуль: pip install <package>. Проверь PYTHONPATH"
+
+- id: python-type-error
+  name: TypeError
+  pattern: "(?i)TypeError:"
+  severity: medium
+  category: application
+  log_types: ["python_traceback", "generic"]
+  description: "Операция применена к объекту не того типа"
+  recommendation: "Проверь типы аргументов и возвращаемых значений"
+
+- id: python-key-error
+  name: KeyError
+  pattern: "(?i)KeyError:"
+  severity: medium
+  category: application
+  log_types: ["python_traceback", "generic"]
+  description: "Обращение к несуществующему ключу словаря"
+  recommendation: "Используй dict.get() или проверь наличие ключа перед обращением"
+
+- id: python-connection-error
+  name: ConnectionError
+  pattern: "(?i)ConnectionError|ConnectionRefused|HTTPError"
+  severity: high
+  category: network
+  log_types: ["python_traceback", "generic"]
+  description: "Ошибка сетевого подключения в Python"
+  recommendation: "Проверь доступность целевого сервиса и параметры подключения"
+
+- id: python-memory-error
+  name: MemoryError
+  pattern: "(?i)MemoryError"
+  severity: critical
+  category: system
+  log_types: ["python_traceback", "generic"]
+  description: "Python не может выделить достаточно памяти"
+  recommendation: "Оптимизируй потребление памяти или увеличь лимиты"

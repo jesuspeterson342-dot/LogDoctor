@@ -1,0 +1,54 @@
+# Docker-specific rules
+- id: docker-container-exited
+  name: Container exited
+  pattern: "(?i)exited\\s+with\\s+code|Container.*(?:exited|stopped|killed)"
+  severity: high
+  category: container
+  log_types: ["docker"]
+  description: "Docker-контейнер завершил работу (неожиданно или с ошибкой)"
+  recommendation: "Проверь логи контейнера, его конфигурацию и зависимости"
+
+- id: docker-image-pull-failed
+  name: Image pull failed
+  pattern: "(?i)failed\\s+to\\s+pull|pull.*failed|manifest.*unknown|image.*not.*found"
+  severity: medium
+  category: container
+  log_types: ["docker"]
+  description: "Не удалось загрузить Docker-образ из реестра"
+  recommendation: "Проверь имя образа, тег, доступ к реестру и авторизацию"
+
+- id: docker-port-conflict
+  name: Port already allocated
+  pattern: "(?i)port.*already.*allocat|address\\s+already\\s+in\\s+use"
+  severity: high
+  category: container
+  log_types: ["docker"]
+  description: "Порт уже занят другим процессом или контейнером"
+  recommendation: "Освободи порт или измени маппинг портов в docker-compose.yml"
+
+- id: docker-oom
+  name: Container OOM killed
+  pattern: "(?i)out\\s+of\\s+memory|oom|OOMKilled"
+  severity: critical
+  category: container
+  log_types: ["docker"]
+  description: "Контейнер был завершён системой из-за нехватки памяти"
+  recommendation: "Увеличь лимит памяти в deploy.resources.limits.memory"
+
+- id: docker-network-error
+  name: Docker network error
+  pattern: "(?i)network.*(?:error|unreachable|timeout)|Could\\s+not\\s+resolve\\s+hostname"
+  severity: high
+  category: container
+  log_types: ["docker"]
+  description: "Проблема с сетью Docker — контейнер не может достичь целевого хоста"
+  recommendation: "Проверь docker network ls, DNS-настройки и firewall"
+
+- id: docker-volume-error
+  name: Volume mount error
+  pattern: "(?i)volume.*(?:error|fail|not\\s+found)|mount.*failed"
+  severity: medium
+  category: container
+  log_types: ["docker"]
+  description: "Ошибка при монтировании Docker volume"
+  recommendation: "Проверь путь к volume, права доступа и существование директории"

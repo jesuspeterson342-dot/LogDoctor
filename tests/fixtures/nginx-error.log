@@ -1,0 +1,6 @@
+2024/01/15 03:22:11 [error] 12345#0: *67890 connect() failed (111: Connection refused) while connecting to upstream, client: 192.168.1.100, server: api.example.com, request: "GET /health HTTP/1.1", upstream: "http://127.0.0.1:8080/health", host: "api.example.com"
+2024/01/15 03:22:15 [error] 12345#0: *67891 upstream timed out (110: Connection timed out) while reading response header from upstream, client: 192.168.1.100, server: api.example.com, request: "GET /data HTTP/1.1", upstream: "http://127.0.0.1:8080/data", host: "api.example.com"
+2024/01/15 03:22:20 [warn] 12345#0: *67892 upstream server returned 502, client: 192.168.1.100, server: api.example.com, request: "POST /submit HTTP/1.1"
+2024/01/15 03:22:25 [error] 12345#0: *67893 SSL_do_handshake() failed (SSL: error:14094418:SSL routines:ssl3_read_bytes:tlsv1 alert unknown ca) while SSL handshaking to upstream
+2024/01/15 03:22:30 [crit] 12345#0: *67894 connection reset by peer
+2024/01/15 03:22:35 [error] 12345#0: *67895 worker connections are not enough while connecting to upstream

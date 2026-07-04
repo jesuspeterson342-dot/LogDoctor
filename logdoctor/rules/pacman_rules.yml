@@ -1,0 +1,54 @@
+# Pacman (Arch Linux) rules
+- id: pacman-failed-transaction
+  name: Failed transaction
+  pattern: "failed\\s+to\\s+commit\\s+transaction"
+  severity: critical
+  category: package
+  log_types: ["pacman"]
+  description: "Pacman не смог завершить транзакцию установки/обновления"
+  recommendation: "Проверь конфликты пакетов, очисти кэш: pacman -Scc, обнови ключи"
+
+- id: pacman-keyring-error
+  name: Keyring/signature error
+  pattern: "(?i)keyring|key\\s+invalid|signature\\s+invalid|unknown\\s+trust|invalid\\s+PGP"
+  severity: high
+  category: security
+  log_types: ["pacman"]
+  description: "Ошибка проверки подписи или ключа PGP"
+  recommendation: "Обнови ключи: pacman-key --refresh-keys, pacman -S archlinux-keyring"
+
+- id: pacman-corrupt-package
+  name: Corrupt package
+  pattern: "(?i)corrupt|checksum.*mismatch|invalid.*package"
+  severity: high
+  category: package
+  log_types: ["pacman"]
+  description: "Пакет повреждён или не прошёл проверку контрольной суммы"
+  recommendation: "Очисти кэш: rm /var/cache/pacman/pkg/*.pkg.tar.* && pacman -Syy"
+
+- id: pacman-conflict
+  name: Package conflict
+  pattern: "(?i)conflict.*package|file.*exists.*already|exists.*filesystem"
+  severity: medium
+  category: package
+  log_types: ["pacman"]
+  description: "Конфликт файлов между пакетами"
+  recommendation: "Используй --overwrite или удали конфликтующий пакет вручную"
+
+- id: pacman-dependency-error
+  name: Dependency error
+  pattern: "(?i)dependency.*satisfy|could.*resolve|required.*by.*not.*found"
+  severity: medium
+  category: package
+  log_types: ["pacman"]
+  description: "Не удалось разрешить зависимости пакета"
+  recommendation: "Обнови систему полностью: pacman -Syu, проверь сторонние репозитории"
+
+- id: pacman-disk-space
+  name: Insufficient disk space
+  pattern: "(?i)insufficient.*disk|not\\s+enough.*space|no\\s+space\\s+left"
+  severity: critical
+  category: system
+  log_types: ["pacman"]
+  description: "Недостаточно места на диске для установки пакетов"
+  recommendation: "Освободи место, очисти кэш пакетов: pacman -Scc"

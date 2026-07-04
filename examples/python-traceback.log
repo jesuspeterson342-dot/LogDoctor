@@ -1,0 +1,13 @@
+2024-01-15 03:22:11,123 - myapp.auth - ERROR - Authentication failed for user admin
+2024-01-15 03:22:12,456 - myapp.db - WARNING - Database connection slow (2340ms)
+Traceback (most recent call last):
+  File "/app/main.py", line 42, in handle_request
+    result = db.query(user_id)
+  File "/app/database.py", line 15, in query
+    conn = psycopg2.connect(dsn)
+  File "/usr/lib/python3.12/psycopg2/__init__.py", line 127, in connect
+    conn = _connect(dsn, connection_factory=connection_factory, cursor_factory=cursor_factory)
+psycopg2.OperationalError: connection refused
+2024-01-15 03:22:13,789 - myapp.core - CRITICAL - System out of memory
+2024-01-15 03:22:14,012 - myapp.cache - ERROR - Redis connection lost
+ImportError: No module named 'nonexistent_package'

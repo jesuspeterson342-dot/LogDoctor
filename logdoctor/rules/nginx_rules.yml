@@ -1,0 +1,63 @@
+# Nginx-specific rules
+- id: nginx-502
+  name: Bad gateway (502)
+  pattern: "(?i)upstream\\s+server\\s+returned\\s+502|502\\s+bad\\s+gateway"
+  severity: high
+  category: network
+  log_types: ["nginx_error", "nginx_access"]
+  description: "Upstream-сервер вернул невалидный ответ"
+  recommendation: "Проверь здоровье backend-сервиса, его логи и конфигурацию upstream"
+
+- id: nginx-504
+  name: Gateway timeout (504)
+  pattern: "(?i)upstream.*timed\\s+out|504\\s+gateway\\s+timeout"
+  severity: high
+  category: network
+  log_types: ["nginx_error", "nginx_access"]
+  description: "Upstream-сервис не ответил вовремя"
+  recommendation: "Увеличь proxy_read_timeout, оптимизируй backend или проверь нагрузку"
+
+- id: nginx-connection-refused
+  name: Nginx connection refused
+  pattern: "connect\\(\\)\\s+failed.*Connection\\s+refused|upstream.*connect\\(\\).*failed"
+  severity: high
+  category: network
+  log_types: ["nginx_error"]
+  description: "Nginx не смог подключиться к upstream-сервису"
+  recommendation: "Проверь, запущен ли backend-сервис и правильно ли указан upstream"
+
+- id: nginx-connection-reset
+  name: Connection reset by peer
+  pattern: "(?i)connection\\s+reset\\s+by\\s+peer|broken\\s+pipe"
+  severity: medium
+  category: network
+  log_types: ["nginx_error"]
+  description: "Соединение сброшено удалённой стороной"
+  recommendation: "Проверь стабильность сети и health upstream-сервиса"
+
+- id: nginx-worker-connections
+  name: Worker connections limit
+  pattern: "(?i)worker_connections\\s+are\\s+not\\s+enough|too\\s+many\\s+open\\s+files"
+  severity: high
+  category: performance
+  log_types: ["nginx_error"]
+  description: "Исчерпан лимит worker connections или файловых дескрипторов"
+  recommendation: "Увеличь worker_connections в nginx.conf и ulimit -n"
+
+- id: nginx-ssl-error
+  name: SSL/TLS error
+  pattern: "(?i)ssl\\s+(?:handshake|read|write)\\s*(?:failed|error)|SSL_do_handshake"
+  severity: high
+  category: security
+  log_types: ["nginx_error"]
+  description: "Ошибка SSL/TLS при установке соединения"
+  recommendation: "Проверь сертификаты, ключи, протоколы TLS и cipher suites"
+
+- id: nginx-upstream-timed-out
+  name: Upstream timed out
+  pattern: "upstream\\s+timed\\s+out\\s+\\((?:110|116|118)\\)"
+  severity: high
+  category: network
+  log_types: ["nginx_error"]
+  description: "Nginx таймаут при ожидании ответа от upstream"
+  recommendation: "Увеличь proxy_connect_timeout / proxy_read_timeout"

@@ -1,0 +1,8 @@
+2024-01-15T03:22:11.123456789Z web-app-1  Starting nginx...
+2024-01-15T03:22:12.234567890Z web-app-1  [error] Failed to connect to database
+2024-01-15T03:22:13.345678901Z db-postgres-1  FATAL:  could not open file "pg_hba.conf": No such file or directory
+2024-01-15T03:22:14.456789012Z web-app-1  Container exited with code 137
+2024-01-15T03:22:15.567890123Z redis-cache-1  Out of memory: Killed process 456
+2024-01-15T03:22:16.678901234Z web-app-1  Port 8080 already in use
+2024-01-15T03:22:17.789012345Z worker-1  panic: runtime error: invalid memory address
+2024-01-15T03:22:18.890123456Z web-app-1  connection refused to upstream

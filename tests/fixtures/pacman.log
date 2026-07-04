@@ -1,0 +1,8 @@
+[2024-01-15T03:22:11+0000] [ALPM] running 'pacman-key --init'
+[2024-01-15T03:22:12+0000] [ALPM] upgraded linux (6.6.10.arch1-1 -> 6.6.11.arch1-1)
+[2024-01-15T03:22:13+0000] [ALPM] warning: linux: key "Arch Linux Archive Keyring <archlinux.org>" is unknown trust
+[2024-01-15T03:22:14+0000] [ALPM] error: failed to commit transaction (invalid or corrupted package)
+[2024-01-15T03:22:15+0000] [PACMAN] error: not enough free disk space
+[2024-01-15T03:22:16+0000] [ALPM] error: failed to commit transaction (conflicting files)
+[2024-01-15T03:22:17+0000] [ALPM] warning: dependency cycle detected: python -> python-setuptools -> python
+[2024-01-15T03:22:18+0000] [ALPM] installed vim (9.0.2136-1)

@@ -1,0 +1,80 @@
+# Default rules for generic log analysis
+- id: permission-denied
+  name: Permission denied
+  pattern: "(?i)permission\\s+denied|access\\s+denied"
+  severity: high
+  category: security
+  description: "Операция отклонена из-за нехватки прав доступа"
+  recommendation: "Проверь права на файл/директорию: ls -la, chmod, chown"
+
+- id: no-space-left
+  name: No space left on device
+  pattern: "(?i)no\\s+space\\s+left\\s+on\\s+device|disk\\s+full"
+  severity: critical
+  category: system
+  description: "Диск заполнен, новые данные не записываются"
+  recommendation: "Освободи место: df -h, du -sh /var/log, journalctl --vacuum-size=500M"
+
+- id: out-of-memory
+  name: Out of memory
+  pattern: "(?i)out\\s+of\\s+memory|oom|oom-killer|cannot\\s+allocate"
+  severity: critical
+  category: system
+  description: "Система или процесс исчерпал оперативную память"
+  recommendation: "Увеличь swap, оптимизируй потребление RAM или добавь физическую память"
+
+- id: segmentation-fault
+  name: Segmentation fault
+  pattern: "(?i)segmentation\\s+fault|segfault|sigsegv"
+  severity: critical
+  category: system
+  description: "Процесс попытался обратиться к недопустимому участку памяти"
+  recommendation: "Обнови ПО, проверь несовместимость библиотек, запусти с valgrind"
+
+- id: connection-refused
+  name: Connection refused
+  pattern: "(?i)connection\\s+refused|econnrefused"
+  severity: high
+  category: network
+  description: "Не удалось установить TCP-соединение — целевой порт не слушает"
+  recommendation: "Проверь, запущен ли целевой сервис и слушает ли он нужный порт"
+
+- id: timeout
+  name: Connection/request timeout
+  pattern: "(?i)timeout|timed\\s+out"
+  severity: medium
+  category: network
+  description: "Операция превысила допустимое время ожидания"
+  recommendation: "Проверь сетевую связность, увеличь timeout, оптимизируй бэкенд"
+
+- id: authentication-failed
+  name: Authentication failed
+  pattern: "(?i)authentication\\s+failed|auth\\s+fail|invalid\\s+credentials"
+  severity: high
+  category: security
+  description: "Не удалось пройти аутентификацию"
+  recommendation: "Проверь учётные данные, не заблокирован ли аккаунт"
+
+- id: database-connection-failed
+  name: Database connection failed
+  pattern: "(?i)database.*connection.*fail|could.*not.*connect.*db|pg_connect|mysql.*connect"
+  severity: high
+  category: database
+  description: "Не удалось установить соединение с базой данных"
+  recommendation: "Проверь доступность БД, параметры подключения, firewall"
+
+- id: systemd-service-failed
+  name: Systemd service failed
+  pattern: "(?i)systemd.*failed|service.*failed.*start|failed.*to.*start.*service"
+  severity: high
+  category: system
+  description: "Системный сервис не смог запуститься или упал"
+  recommendation: "Просмотри journalctl -u <service>, проверь конфиг и зависимости"
+
+- id: disk-full
+  name: Disk full warning
+  pattern: "(?i)disk.*full|filesystem.*full|device.*full"
+  severity: critical
+  category: system
+  description: "Файловая система заполнена"
+  recommendation: "Очисти логи, tmp, кэш. Проверь: du -sh /* | sort -rh | head"
