@@ -6,28 +6,33 @@
 [![Ruff](https://img.shields.io/badge/ruff-passing-brightgreen)]()
 [![mypy](https://img.shields.io/badge/mypy-strict-brightgreen)]()
 
-**Terminal utility for log analysis, error detection, and reporting.**
+> **Terminal utility for log analysis, error detection, and reporting.**
 
 LogDoctor parses log files, detects errors and anomalies using regex-based rules, groups repeating patterns, and generates structured reports in Markdown or JSON. Built for DevOps engineers and Linux developers who live in the terminal.
 
-```
-╭─────────────────────────────── Scan Result ───────────────────────────────╮
-│ File: /var/log/nginx/error.log                                           │
-│ Type: nginx_error                                                        │
-│ Lines: 14,892                                                            │
-│ Duration: 23ms                                                           │
-│                                                                          │
-│ Critical: 0  Errors: 12  Warnings: 3                                    │
-╰──────────────────────────────────────────────────────────────────────────╯
+---
 
-┌────────────────────────────── Top Patterns ──────────────────────────────┐
-│ Rule              │ Severity │ Count │ Description                       │
-├───────────────────┼──────────┼───────┼───────────────────────────────────┤
-│ Connection refused│ ▲ HIGH   │     8 │ Upstream unreachable              │
-│ Upstream timeout  │ ▲ HIGH   │     4 │ Backend did not respond in time   │
-│ SSL error         │ ▲ HIGH   │     2 │ TLS handshake failed              │
-└──────────────────────────────────────────────────────────────────────────┘
-```
+### Scan Result
+
+| Property | Value |
+|:---------|------:|
+| **File** | `/var/log/nginx/error.log` |
+| **Type** | `nginx_error` |
+| **Lines** | `14,892` |
+| **Duration** | `23ms` |
+| **Critical** | `0` |
+| **Errors** | `12` |
+| **Warnings** | `3` |
+
+### Top Patterns
+
+| Rule | Severity | Count | Description |
+|:-----|:--------:|------:|:------------|
+| Connection refused | `▲ HIGH` | 8 | Upstream unreachable |
+| Upstream timeout | `▲ HIGH` | 4 | Backend did not respond in time |
+| SSL error | `▲ HIGH` | 2 | TLS handshake failed |
+
+---
 
 ## Why This Project Exists
 
@@ -35,48 +40,51 @@ When a production service goes down at 3 AM, the first thing you do is read the 
 
 LogDoctor solves this: point it at a log file, and it instantly identifies error patterns, groups them by frequency, assigns severity levels, and tells you what to fix. No configuration needed for common formats — it auto-detects nginx, Python, Docker, and pacman logs.
 
+---
+
 ## Features
 
 - **Auto-detection** of log types (nginx, Python, Docker, pacman, systemd, generic)
 - **Regex-based rules** engine with YAML-defined patterns
-- **7 CLI commands**: scan, watch, report, rules, doctor, benchmark, init
+- **7 CLI commands**: `scan`, `watch`, `report`, `rules`, `doctor`, `benchmark`, `init`
 - **Rich terminal UI** with colored severity labels, tables, panels
 - **Multiple output formats**: Markdown, JSON, plain text
-- **Real-time monitoring** with `watch` (tail -f with intelligence)
+- **Real-time monitoring** with `watch` (`tail -f` with intelligence)
 - **Performance benchmarking** for large log files
 - **35 built-in rules** covering common failure scenarios
 - **Configurable** via `~/.config/logdoctor/config.yml`
+
+---
 
 ## Demo
 
 ### Scan a log file
 
-```
+```bash
 $ logdoctor scan examples/nginx-error.log
 ```
 
-```
-╭─────────────────────────────── Scan Result ───────────────────────────────╮
-│ File: examples/nginx-error.log                                           │
-│ Type: nginx_error                                                        │
-│ Lines: 6                                                                 │
-│ Duration: 27ms                                                           │
-│                                                                          │
-│ Critical: 1  Errors: 4  Warnings: 1                                      │
-╰──────────────────────────────────────────────────────────────────────────╯
-                                Top Patterns
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Rule                       ┃ Severity   ┃ Count ┃ Description            ┃
-┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━┩
-│ Connection refused         │  ▲ HIGH    │     1 │ Upstream unreachable  │
-│ Nginx connection refused   │  ▲ HIGH    │     1 │ Backend unreachable   │
-│ Connection/request timeout │  ◆ MEDIUM  │     1 │ Request timed out     │
-│ Gateway timeout (504)      │  ▲ HIGH    │     1 │ Backend too slow      │
-│ Bad gateway (502)          │  ▲ HIGH    │     1 │ Invalid upstream resp │
-│ SSL/TLS error              │  ▲ HIGH    │     1 │ TLS handshake failed  │
-│ Connection reset by peer   │  ◆ MEDIUM  │     1 │ Peer disconnected     │
-└────────────────────────────┴────────────┴───────┴────────────────────────┘
-```
+| Property | Value |
+|:---------|------:|
+| **File** | `examples/nginx-error.log` |
+| **Type** | `nginx_error` |
+| **Lines** | `6` |
+| **Duration** | `27ms` |
+| **Critical** | `1` |
+| **Errors** | `4` |
+| **Warnings** | `1` |
+
+#### Top Patterns
+
+| Rule | Severity | Count | Description |
+|:-----|:--------:|------:|:------------|
+| Connection refused | `▲ HIGH` | 1 | Upstream unreachable |
+| Nginx connection refused | `▲ HIGH` | 1 | Backend unreachable |
+| Connection/request timeout | `◆ MEDIUM` | 1 | Request timed out |
+| Gateway timeout (504) | `▲ HIGH` | 1 | Backend too slow |
+| Bad gateway (502) | `▲ HIGH` | 1 | Invalid upstream resp |
+| SSL/TLS error | `▲ HIGH` | 1 | TLS handshake failed |
+| Connection reset by peer | `◆ MEDIUM` | 1 | Peer disconnected |
 
 ### Benchmark on a large file
 
@@ -87,27 +95,18 @@ Generated 100,000 lines -> examples/big.log
 $ logdoctor benchmark examples/big.log
 ```
 
-```
-Benchmarking: examples/big.log
-  Size: 10.2 MB | Lines: 100,000
+#### Benchmark Result
 
-                Benchmark Result
-┏━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃ Metric         ┃ Value                        ┃
-┡━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
-│ File           │ examples/big.log             │
-├────────────────┼──────────────────────────────┤
-│ Total lines    │ 100,000                      │
-├────────────────┼──────────────────────────────┤
-│ Events found   │ 35,000                       │
-├────────────────┼──────────────────────────────┤
-│ Elapsed time   │ 850ms                        │
-├────────────────┼──────────────────────────────┤
-│ Lines/second   │ 117,647                      │
-├────────────────┼──────────────────────────────┤
-│ Memory peak    │ 2.1 MB                       │
-└────────────────┴──────────────────────────────┘
-```
+| Metric | Value |
+|:-------|------:|
+| **File** | `examples/big.log` |
+| **Total lines** | `100,000` |
+| **Events found** | `35,000` |
+| **Elapsed time** | `850ms` |
+| **Lines/second** | `117,647` |
+| **Memory peak** | `2.1 MB` |
+
+---
 
 ## Installation
 
@@ -118,6 +117,8 @@ pipx install .
 # Via pip (development)
 pip install -e ".[dev]"
 ```
+
+---
 
 ## Usage
 
@@ -182,10 +183,12 @@ python scripts/generate_big_log.py --lines 100000 --output big.log
 logdoctor benchmark big.log
 ```
 
+---
+
 ## CLI Reference
 
 | Command | Description |
-|---------|-------------|
+|:--------|:------------|
 | `logdoctor scan <file>` | Analyze a log file for errors |
 | `logdoctor watch <file>` | Monitor a log in real-time |
 | `logdoctor report <file>` | Generate a structured report |
@@ -197,16 +200,18 @@ logdoctor benchmark big.log
 ### Global Options
 
 | Option | Description |
-|--------|-------------|
+|:-------|:------------|
 | `--color / --no-color` | Toggle colored output |
 | `--quiet, -q` | Suppress non-essential output |
 | `--verbose, -v` | Show detailed output |
 | `--version, -V` | Show version |
 
+---
+
 ## Supported Log Types
 
 | Type | Format | Example |
-|------|--------|---------|
+|:-----|:-------|:--------|
 | `nginx_error` | Nginx error log with timestamps | `[error] connect() failed` |
 | `nginx_access` | Nginx combined access log | `127.0.0.1 - - [15/Jan/...]` |
 | `python_traceback` | Python logs + tracebacks | `Traceback (most recent call last):` |
@@ -214,6 +219,8 @@ logdoctor benchmark big.log
 | `pacman` | Arch Linux pacman.log | `[2024-01-15T...] [ALPM] ...` |
 | `systemd` | systemd journal export | syslog-style format |
 | `generic` | Any plain text with level markers | `ERROR something failed` |
+
+---
 
 ## Architecture
 
@@ -248,6 +255,8 @@ logdoctor/
     └── perf.py          # Performance measurement
 ```
 
+---
+
 ## Rule Format
 
 Rules are defined in YAML files:
@@ -266,15 +275,17 @@ Rules are defined in YAML files:
 ### Rule fields
 
 | Field | Required | Description |
-|-------|----------|-------------|
+|:------|:--------:|:------------|
 | `id` | Yes | Unique identifier |
 | `name` | Yes | Human-readable name |
 | `pattern` | Yes | Python regex pattern |
-| `severity` | Yes | low / medium / high / critical |
+| `severity` | Yes | `low` / `medium` / `high` / `critical` |
 | `category` | No | Classification tag |
 | `description` | No | What this means |
 | `recommendation` | No | How to fix it |
 | `log_types` | No | Restrict to specific log types |
+
+---
 
 ## Configuration
 
@@ -288,6 +299,8 @@ rules_path: ""        # custom rules directory (empty = bundled)
 cache_dir: ""         # cache directory (empty = ~/.cache/logdoctor)
 ignored_patterns: []  # patterns to skip during analysis
 ```
+
+---
 
 ## Development
 
@@ -330,6 +343,8 @@ logdoctor --install-completion fish | source
 
 Or manually: run `logdoctor --install-completion fish` and follow the instructions.
 
+---
+
 ## Roadmap
 
 - [ ] Add syslog/RSYSLOG_SyslogProtocol23 format support
@@ -341,9 +356,11 @@ Or manually: run `logdoctor --install-completion fish` and follow the instructio
 - [ ] Add plugin system for custom parsers
 - [ ] Performance: streaming mode for multi-GB files
 
+---
+
 ## License
 
-MIT
+**MIT**
 
 ---
 
