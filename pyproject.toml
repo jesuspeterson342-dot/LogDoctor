@@ -44,7 +44,7 @@ dev = [
 logdoctor = "logdoctor.cli:app"
 
 [project.urls]
-Repository = "https://github.com/jesuspeterson342-dot/logdoctor"
+Repository = "https://github.com/jesuspeterson342-dot/LogDoctor"
 
 [tool.hatch.build.targets.wheel]
 packages = ["logdoctor"]

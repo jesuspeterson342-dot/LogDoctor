@@ -1,6 +1,6 @@
 # LogDoctor
 
-[![CI](https://github.com/jesuspeterson342-dot/logdoctor/actions/workflows/ci.yml/badge.svg)](https://github.com/jesuspeterson342-dot/logdoctor/actions/workflows/ci.yml)
+[![CI](https://github.com/jesuspeterson342-dot/LogDoctor/actions/workflows/ci.yml/badge.svg)](https://github.com/jesuspeterson342-dot/LogDoctor/actions/workflows/ci.yml)
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
 [![Tests](https://img.shields.io/badge/tests-56%20passed-brightgreen)]()
 [![Ruff](https://img.shields.io/badge/ruff-passing-brightgreen)]()
@@ -307,7 +307,7 @@ ignored_patterns: []  # patterns to skip during analysis
 ### Setup
 
 ```bash
-git clone https://github.com/jesuspeterson342-dot/logdoctor.git
+git clone https://github.com/jesuspeterson342-dot/LogDoctor.git
 cd logdoctor
 pip install -e ".[dev]"
 ```
